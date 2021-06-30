@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LLC_BI__Fee_Disclosure_Tolerances_Categories</fullName>
+    <active>true</active>
+    <description>User incorrectly populated TRID Disclosure Category and TRID Tolerances Category fields.</description>
+    <errorConditionFormula>OR(
+        AND(LLC_BI__Loan__r.LLC_BI__Product_Reference__r.LLC_BI__Product_Feature__r.LLC_BI__Is_Subject_To_TRID_Tolerances__c, 
+            OR(ISBLANK(TEXT(LLC_BI__TRID_Disclosure_Category__c)), ISBLANK(TEXT(LLC_BI__TRID_Tolerances_Category__c))),
+            NOT(
+                OR(ISPICKVAL(LLC_BI__Fee_Type__c , &apos;Lender Credit&apos;), ISPICKVAL(LLC_BI__Fee_Type__c , &apos;Cost to Cure&apos;))
+                )          
+            ),
+        AND(NOT(LLC_BI__Loan__r.LLC_BI__Product_Reference__r.LLC_BI__Product_Feature__r.LLC_BI__Is_Subject_To_TRID_Tolerances__c),
+            OR(NOT(ISBLANK(TEXT(LLC_BI__TRID_Disclosure_Category__c))), NOT(ISBLANK(TEXT(LLC_BI__TRID_Tolerances_Category__c))))
+            )
+     )</errorConditionFormula>
+    <errorMessage>Select the appropriate TRID Disclosure Category and TRID Tolerances Category for each fee only if the loan is subject to TRID tolerances.</errorMessage>
+</ValidationRule>
