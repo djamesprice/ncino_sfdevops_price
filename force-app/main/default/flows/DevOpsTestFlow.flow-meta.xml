@@ -14,6 +14,22 @@
             </value>
         </assignmentItems>
     </assignments>
+    <assignments>
+        <name>set_testbox</name>
+        <label>set testbox</label>
+        <locationX>282</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>get_loan.testbox__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>update_loan</targetReference>
+        </connector>
+    </assignments>
     <interviewLabel>DevOpsTestFlow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>DevOpsTestFlow</label>
     <processMetadataValues>
@@ -35,11 +51,36 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>get_loan</name>
+        <label>get loan</label>
+        <locationX>149</locationX>
+        <locationY>341</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>set_testbox</targetReference>
+        </connector>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>LLC_BI__Loan__c</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>update_loan</name>
+        <label>update loan</label>
+        <locationX>467</locationX>
+        <locationY>272</locationY>
+        <connector>
+            <targetReference>Exit</targetReference>
+        </connector>
+        <inputReference>get_loan</inputReference>
+    </recordUpdates>
     <start>
         <locationX>50</locationX>
         <locationY>50</locationY>
         <connector>
-            <targetReference>Exit</targetReference>
+            <targetReference>get_loan</targetReference>
         </connector>
     </start>
     <status>Draft</status>
